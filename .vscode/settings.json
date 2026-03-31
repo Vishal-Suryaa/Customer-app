@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/4c70876d-c538-480e-b8ad-48cb7196d1c5/resourceGroups/customer-app/providers/Microsoft.Web/sites/mean-stack-api",
+  "appService.deploySubpath": "backend"
+}
