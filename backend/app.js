@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 connectToMongoDB();
 
 async function connectToMongoDB() {
-    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vishalsurya27_db_user:0Wa7SMKOu1Bf9mg4@cluster-1.72zt3f5.mongodb.net/customersDB?appName=Cluster-1';
+    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vishalsurya27_db_user:0Wa7SMKOu1Bf9mg4@cluster-1.72zt3f5.mongodb.net/';
     try {
         await mongoose.connect(MONGODB_URI);
         mongoose.set('strictQuery', true);
