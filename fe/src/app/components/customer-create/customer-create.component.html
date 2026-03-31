@@ -1,0 +1,57 @@
+<div class="create-container">
+  <div class="header">
+    <div class="header-text">
+      <h2>New Customer</h2>
+      <p class="subtitle">Add a new customer to your records</p>
+    </div>
+    <button mat-stroked-button routerLink="/">
+      <mat-icon>arrow_back</mat-icon>
+      Back to list
+    </button>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="name" placeholder="e.g. John Doe">
+        <mat-icon matPrefix>person</mat-icon>
+        @if (customerForm.get('name')?.hasError('required') && customerForm.get('name')?.touched) {
+          <mat-error>Name is required</mat-error>
+        } @else if (customerForm.get('name')?.hasError('minlength') && customerForm.get('name')?.touched) {
+          <mat-error>Name must be at least 2 characters</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" placeholder="e.g. john@example.com" type="email">
+        <mat-icon matPrefix>email</mat-icon>
+        @if (customerForm.get('email')?.hasError('required') && customerForm.get('email')?.touched) {
+          <mat-error>Email is required</mat-error>
+        } @else if (customerForm.get('email')?.hasError('email') && customerForm.get('email')?.touched) {
+          <mat-error>Please enter a valid email address</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phone" placeholder="e.g. +1 (555) 123-4567" type="tel">
+        <mat-icon matPrefix>phone</mat-icon>
+        @if (customerForm.get('phone')?.hasError('required') && customerForm.get('phone')?.touched) {
+          <mat-error>Phone number is required</mat-error>
+        } @else if (customerForm.get('phone')?.hasError('pattern') && customerForm.get('phone')?.touched) {
+          <mat-error>Please enter a valid phone number</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" routerLink="/">Cancel</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting">
+          <mat-icon>save</mat-icon>
+          {{ submitting ? 'Creating...' : 'Create Customer' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

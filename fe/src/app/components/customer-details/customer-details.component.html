@@ -1,0 +1,80 @@
+@if (loading) {
+  <div class="loading-container">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+} @else if (error || !customer) {
+  <div class="details-container">
+    <div class="error-state">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3>Customer not found</h3>
+      <p>The customer you're looking for doesn't exist or could not be loaded.</p>
+      <button mat-stroked-button color="primary" routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+        Back to list
+      </button>
+    </div>
+  </div>
+} @else {
+  <div class="details-container">
+    <div class="header">
+      <div class="header-text">
+        <h2>Customer Details</h2>
+        <p class="subtitle">View customer information</p>
+      </div>
+      <button mat-stroked-button routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+        Back to list
+      </button>
+    </div>
+
+    <div class="details-card">
+      <div class="profile-section">
+        <div class="avatar">{{ getInitial() }}</div>
+        <div class="profile-info">
+          <h3 class="customer-name">{{ customer.name }}</h3>
+          <p class="customer-id">ID: {{ customer._id }}</p>
+        </div>
+        <div class="profile-actions">
+          <button mat-stroked-button color="primary" [routerLink]="['/edit', customer._id]">
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">
+            <mat-icon>email</mat-icon>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Email Address</span>
+            <span class="info-value">{{ customer.email }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <mat-icon>phone</mat-icon>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Phone Number</span>
+            <span class="info-value">{{ customer.phone }}</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <mat-icon>calendar_today</mat-icon>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Date Added</span>
+            <span class="info-value">{{ customer.date | date:'MMMM dd, yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

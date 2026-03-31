@@ -1,0 +1,82 @@
+<div class="customer-list-container">
+  <div class="header">
+    <div class="header-text">
+      <h2>Customers</h2>
+      <p class="subtitle">Manage your customer records</p>
+    </div>
+    <button mat-flat-button color="primary" routerLink="/create">
+      <mat-icon>add</mat-icon>
+      New Customer
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search customers</mat-label>
+    <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" placeholder="Search by name, email, or phone...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="table-card" *ngIf="filteredCustomers.length > 0; else emptyState">
+    <table mat-table [dataSource]="filteredCustomers" class="customer-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let customer">
+          <div class="customer-name">
+            <div class="avatar">{{ customer.name | slice:0:1 }}</div>
+            <span>{{ customer.name }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let customer">
+          <span class="email-text">{{ customer.email }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Phone</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.phone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date Added</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.date | date:'MMM dd, yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let customer">
+          <div class="action-buttons">
+            <button mat-icon-button [routerLink]="['/details', customer._id]" matTooltip="View details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="['/edit', customer._id]" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCustomer(customer._id)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <mat-icon class="empty-icon">people_outline</mat-icon>
+      <h3>No customers found</h3>
+      <p *ngIf="searchTerm">No results match "{{ searchTerm }}". Try a different search.</p>
+      <p *ngIf="!searchTerm">Get started by adding your first customer.</p>
+      <button mat-stroked-button color="primary" routerLink="/create" *ngIf="!searchTerm">
+        <mat-icon>add</mat-icon>
+        Add Customer
+      </button>
+    </div>
+  </ng-template>
+</div>
